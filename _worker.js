@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: 0BSD
 
 // 定义常量，指定 DNS-over-HTTPS (DoH) 服务的 URL
-const doh = 'https://dns.google/dns-query';
-const dohjson = 'https://dns.google/resolve';
+let doh = 'https://dns.google/dns-query';
+let dohjson = 'https://dns.google/resolve';
 
 // 定义常量，指定请求和响应的内容类型
 const contype = 'application/dns-message';
@@ -14,6 +14,8 @@ const r404 = new Response(null, { status: 404 });
 // 导出 Worker 模块的默认函数
 export default {
     async fetch(r, env, ctx) {
+        doh = env.DOH || doh;
+        dohjson = env.DOHJS || dohjson;
         // 处理请求并返回响应
         return handleRequest(r);
     },
